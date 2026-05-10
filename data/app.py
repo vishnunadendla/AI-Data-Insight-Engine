@@ -164,6 +164,21 @@ st.title("Chat with Vishnu's AI Data Insight Engine")
 # Get question from user
 question = st.chat_input("Ask me anything about Vishnu:")
 
+with st.sidebar:
+    st.title("Vishnu Vardhan")
+    st.write("Data Analyst | 4+ years")
+    st.write("📍 Philadelphia, PA")
+    st.markdown("[🔗 LinkedIn](https://linkedin.com/in/nadendla-v)")
+    st.markdown("[💻 GitHub](https://github.com/vishnunadendla)")
+    #st.markdown("[📄 Download Resume](https://raw.githubusercontent.com/vishnunadendla/AI-Data-Insight-Engine/main/data/vishnu_resume.pdf)")
+
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("💼 Work experience?"):
+         #auto-fills question
+with col2:
+    if st.button("🛠️ Technical skills?"):
+          # auto-fills question
 
 if question:
     with st.chat_message("user"):
