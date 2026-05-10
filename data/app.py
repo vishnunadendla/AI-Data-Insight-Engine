@@ -163,7 +163,7 @@ def answer_question(question,index,Resume_Chunks):
         return "Vishnu is currently pushing a hotfix to my reasoning engine. Try again in a few seconds!"
 
 
-def analyze_jd(jd_text):
+'''def analyze_jd(jd_text):
     all_resume = "\n".join([
         f"[{chunk['Section']}]: {chunk['Content']}"
         for chunk in Resume_Chunks
@@ -206,15 +206,54 @@ jd_input = st.text_area(
     "Paste job description:",
     height=200,
     placeholder="Paste any job description here..."
-)
+)'''
 
 if st.button("🔍 Analyze My Fit"):
+    question = st.chat_input("Chek How Fit is Vishnu for your role")
+    def analyze_jd(jd_text):
+        all_resume = "\n".join([
+            f"[{chunk['Section']}]: {chunk['Content']}"
+            for chunk in Resume_Chunks
+        ])
+
+        prompt = f"""
+        You are analyzing job fit for Vishnu Vardhan.
+
+        VISHNU'S COMPLETE PROFILE:
+        {all_resume}
+
+        JOB DESCRIPTION:
+        {jd_text}
+
+        Return EXACTLY this format:
+
+        ✅ STRONG MATCH:
+        → [skill]: [evidence from profile]
+
+        ⚡ PARTIAL MATCH:
+        → [skill]: [transferable explanation]
+
+        ❌ GAP:
+        → [skill]: [honest acknowledgment]
+
+        MATCH SCORE: X/100
+
+        RECOMMENDATION: [one positive line]
+        """
+
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content
+
+'''if st.button("🔍 Analyze My Fit"):
     if jd_input:
         with st.spinner("Analyzing fit..."):
             result = analyze_jd(jd_input)
         st.markdown(result)
     else:
-        st.warning("Please paste a job description!")
+        st.warning("Please paste a job description!")'''
 
 st.title("Chat with Vishnu's AI Data Insight Engine")
 
