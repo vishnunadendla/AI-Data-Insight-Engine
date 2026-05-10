@@ -176,7 +176,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     if st.button("💼 Work experience?"):
-        question = "What is Vishnu's work experience?"
+        question = "How many of years experinece vihsnu have and what are they"
 
 with col2:
     if st.button("🛠️ Technical skills?"):
