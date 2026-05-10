@@ -206,7 +206,7 @@ jd_input = st.text_area(
     "Paste job description:",
     height=200,
     placeholder="Paste any job description here..."
-)'''
+)
 
 if st.button("🔍 Analyze My Fit"):
     question = st.chat_input("Chek How Fit is Vishnu for your role")
@@ -245,7 +245,7 @@ if st.button("🔍 Analyze My Fit"):
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}]
         )
-        return response.choices[0].message.content
+        return response.choices[0].message.content'''
 
 '''if st.button("🔍 Analyze My Fit"):
     if jd_input:
