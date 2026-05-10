@@ -173,12 +173,14 @@ with st.sidebar:
     #st.markdown("[📄 Download Resume](https://raw.githubusercontent.com/vishnunadendla/AI-Data-Insight-Engine/main/data/vishnu_resume.pdf)")
 
 col1, col2 = st.columns(2)
+
 with col1:
     if st.button("💼 Work experience?"):
-         #auto-fills question
+        question = "What is Vishnu's work experience?"
+
 with col2:
     if st.button("🛠️ Technical skills?"):
-          # auto-fills question
+        question = "What are Vishnu's technical skills?"
 
 if question:
     with st.chat_message("user"):
