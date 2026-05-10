@@ -129,17 +129,21 @@ def answer_question(question,index,Resume_Chunks):
         )
     context = "\n\n".join(retrieved_chunks)
     prompt = f"""
-        You are a professional AI career agent 
-        representing Vishnu Vardhan.
+        ROLE:
+        You are "Vardhan-Index," a high-performance AI Career Representative for Vishnu Vardhan. 
+        Your goal is to bridge the gap between Vishnu's technical data engineering expertise and the recruiter's business needs.
 
-        Answer the recruiter's question using 
-        ONLY the context provided below.
+        STRICT RULES:
+        1. DATA INTEGRITY: Use ONLY the provided CONTEXT. If the answer isn't there, say: "I'll have Vishnu follow up on that specific detail directly."
+        2. FORMATTING: Use **bolding** for technical tools (e.g., **dbt**, **Airflow**, **SQL**) to make the answer scannable.
+        3. SOURCE ATTRIBUTION: Always end the response by mentioning the relevant section not in between (e.g., "Source: [Epsilon Experience]").
+        4. NEVER say "not a fit" or "lacks experience" Instead say "transferable skill" or "can ramp up quickly based on [evidence]"
 
-        If the answer is not in the context say:
-        "I'll have Vishnu follow up on that directly."
-
-        Always be professional and positive.
-        Always mention the source section.
+        TONE & PERSONALITY:
+        - Professional, analytical, and proactive.
+        - Instead of just saying "Yes," explain the **how** and the **outcome** based on the context.
+        - If asked about a skill Vishnu has, frame it as a solution to a business problem..
+        - Never negative. Always find the transferable angle.Maximum 4 sentences per answer.
 
         CONTEXT:
         {context}
@@ -158,6 +162,59 @@ def answer_question(question,index,Resume_Chunks):
     except Exception as e:
         return "Vishnu is currently pushing a hotfix to my reasoning engine. Try again in a few seconds!"
 
+
+def analyze_jd(jd_text):
+    all_resume = "\n".join([
+        f"[{chunk['Section']}]: {chunk['Content']}"
+        for chunk in Resume_Chunks
+    ])
+
+    prompt = f"""
+    You are analyzing job fit for Vishnu Vardhan.
+
+    VISHNU'S COMPLETE PROFILE:
+    {all_resume}
+
+    JOB DESCRIPTION:
+    {jd_text}
+
+    Return EXACTLY this format:
+
+    ✅ STRONG MATCH:
+    → [skill]: [evidence from profile]
+
+    ⚡ PARTIAL MATCH:
+    → [skill]: [transferable explanation]
+
+    ❌ GAP:
+    → [skill]: [honest acknowledgment]
+
+    MATCH SCORE: X/100
+
+    RECOMMENDATION: [one positive line]
+    """
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content
+st.divider()
+st.subheader("📋 Paste JD — See Instant Match Score")
+
+jd_input = st.text_area(
+    "Paste job description:",
+    height=200,
+    placeholder="Paste any job description here..."
+)
+
+if st.button("🔍 Analyze My Fit"):
+    if jd_input:
+        with st.spinner("Analyzing fit..."):
+            result = analyze_jd(jd_input)
+        st.markdown(result)
+    else:
+        st.warning("Please paste a job description!")
 
 st.title("Chat with Vishnu's AI Data Insight Engine")
 
