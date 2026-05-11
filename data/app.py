@@ -164,7 +164,7 @@ def answer_question(question,index,Resume_Chunks):
 
 
 
-st.title("Chat with Vishnu's AI Data Insight Engine")
+st.title("Chat with  Vishnu.AI — Interactive Portfolio")
 
 # Get question from user
 question = st.chat_input("Ask me anything about Vishnu:")
@@ -186,6 +186,28 @@ with col1:
 with col2:
     if st.button("🛠️ Technical skills?"):
         question = "What are Vishnu's technical skills?"
+
+with st.sidebar:
+    st.divider()
+    st.markdown("### 💬 Let's Connect")
+    st.markdown(
+        """
+        <a href="https://cal.com/vishnu-n-tvdztt/15min">
+           <button style="
+               background-color:#00D4FF;
+               color:black;
+               padding:10px 20px;
+               border:none;
+               border-radius:5px;
+               cursor:pointer;
+               font-weight:bold;
+               width:100%">
+               📅  Connect for 15-min Call
+           </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
 
 if question:
     with st.chat_message("user"):
